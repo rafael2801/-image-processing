@@ -73,12 +73,24 @@ def main(page: ft.Page):
         plt.axis('off')
         plt.show()
 
+    def rgb_to_gray(r, g, b):
+        return int(0.2989 * r + 0.5870 * g + 0.1140 * b)
+
     def handle_convert_to_white_and_black(*args):
-            image = convert_to_cv2()
-            (matrizAzul, matrizVerde, matrizVermelho) = cv2.split(image)
-            cv2.imshow('Imagem', matrizVermelho)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            image = Image.open(io.BytesIO(base64.b64decode(image_holder.src_base64)))
+            pixels = image.load()
+
+            width, height = image.size
+
+            for y in range(height):
+                for x in range(width):
+                    r, g, b, a = pixels[x, y]
+                    gray = rgb_to_gray(r, g, b)
+                    pixels[x, y] = (gray, gray, gray, a)
+
+            plt.imshow(image)
+            plt.axis('off')
+            plt.show()
 
     def translate_image(image_array, dx, dy):
         height, width, channels = image_array.shape
