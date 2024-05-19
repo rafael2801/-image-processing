@@ -65,16 +65,13 @@ def main(page: ft.Page):
 
     def handle_translate_image(*args):
         nonlocal inScale
+        imagem = Image.open(io.BytesIO(base64.b64decode(image_holder.src_base64)))
         
-        if(inScale == True):
-            inScale = False
-            image_holder.scale = ft.Scale(scale_x=1, scale_y=1)
-        else:
-            inScale = True 
-            image_holder.scale = ft.Scale(scale_x=2, scale_y=2)
-        
-        
-        page.update()
+        imagem_redimensionada = imagem.resize((790, 150))
+
+        plt.imshow(imagem_redimensionada)
+        plt.axis('off')
+        plt.show()
 
     def handle_convert_to_white_and_black(*args):
             image = convert_to_cv2()
