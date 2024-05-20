@@ -57,10 +57,11 @@ def main(page: ft.Page):
         
     def handle_rotate_image(*args):
         nonlocal rotateNumber
-        rotateNumber += 140
-        image_holder.rotate = rotateNumber
-        image_holder.visible = True
-        page.update()
+        imagem = Image.open(io.BytesIO(base64.b64decode(image_holder.src_base64)))
+        imagemy = girar(imagem, 2)
+        plt.imshow(imagemy)
+        plt.axis('off')
+        plt.show()
 
 
     def handle_translate_image(*args):
@@ -217,10 +218,62 @@ def main(page: ft.Page):
         plt.axis('off')  # Ocultar os eixos
         plt.show()
 
+
+            # função para girar no sentiro anti-horário
+    def girar_matriz_sentido_anti_horario(matriz):
+
+        largura, altura = matriz.size
+
+        imagem2 = Image.new("RGB", (altura,largura))
+
+        for i in range(altura):
+            for j in range(largura):
+
+                # Pega os pixels da imagem original da esquerda para direita, de cima para baixo
+                pixel = matriz.getpixel((j, i))
+
+                # Coloca os pixels da imagem original para a nova orientação que é [i, largura - 1 - j]
+                imagem2.putpixel((i, largura - 1 - j), pixel)
+
+
+        return imagem2
+
+
+    # função para girar no sentiro horário
+    def girar_matriz_sentido_horario(matriz):
+
+        largura, altura = matriz.size
+
+        imagem2 = Image.new("RGB", (altura,largura))
+
+        for i in range(altura):
+            for j in range(largura):
+
+                # Pega os pixels da imagem original da esquerda para direita, de cima para baixo
+                pixel = matriz.getpixel((j, i))
+
+                # Coloca os pixels da imagem original para a nova orientação que é [altura - 1 - i , j]
+                imagem2.putpixel((altura - 1 - i , j), pixel)
+
+
+        return imagem2
+
+    # Função principal, recebe a imagem e a direção
+    # Para girar no sentido anti-horário 1
+    # Para girar no sentido horário 2
+    def girar(matriz, direcao):
+        if direcao == 1:
+            imagemy = girar_matriz_sentido_anti_horario(matriz)
+        elif direcao == 2:
+            imagemy = girar_matriz_sentido_horario(matriz)
+
+
+        return imagemy
+
     rrow_button = ft.ResponsiveRow(
         [ft.ElevatedButton(text='Rotaçao', on_click=handle_rotate_image, col={"md": 4}),
-         ft.ElevatedButton(text='Escala', on_click=handle_translate_image, col={"md": 4}),
          ft.ElevatedButton(text='Translação', on_click=handle_tranlate_image, col={"sm": 4}),
+         ft.ElevatedButton(text='Escala', on_click=handle_translate_image, col={"md": 4}),
          ft.ElevatedButton(text='Conversão para preto e branco', on_click=handle_convert_to_white_and_black, col={"md":4}),
          ft.ElevatedButton(text='Histograma', on_click=handle_histogram, col={"sm": 4}),
          ft.ElevatedButton(text='Cortar', on_click=handle_cut, col={"sm": 4}),
