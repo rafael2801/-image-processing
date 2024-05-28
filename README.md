@@ -9,12 +9,12 @@ Projeto da USJT que tem como objetivo mostrar o processamento de imagens.
 Clone este repositório em seu computador:
 
 ```sh
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/rafael2801/-image-processing.git processamentoImagens
 ```
 ### Passo 2:
 Entre no repositorio:
 ```sh
-cd seu-repositorio
+cd processamentoImagens
 ```
 ### Passo 3:
 Instale as dependencias:
