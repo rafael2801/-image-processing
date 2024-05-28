@@ -85,9 +85,14 @@ def main(page: ft.Page):
 
             for y in range(height):
                 for x in range(width):
-                    r, g, b, a = pixels[x, y]
-                    gray = rgb_to_gray(r, g, b)
-                    pixels[x, y] = (gray, gray, gray, a)
+                    if len(pixels[x, y]) == 4:
+                        r, g, b, a = pixels[x, y]
+                        gray = rgb_to_gray(r, g, b)
+                        pixels[x, y] = (gray, gray, gray, a)
+                    else:
+                        r, g, b = pixels[x, y]
+                        gray = rgb_to_gray(r, g, b)
+                        pixels[x, y] = (gray, gray, gray)
 
             plt.imshow(image)
             plt.axis('off')
@@ -205,12 +210,20 @@ def main(page: ft.Page):
         # Aplicar o filtro vermelho
         for y in range(height):
             for x in range(width):
-                r, g, b, a = pixels[x, y]
-                # Aumentar a componente vermelha e diminuir verde e azul
-                red = min(255, int(r * 1.5))  # Ajustar a intensidade do vermelho
-                green = int(g * 0.5)  # Reduzir a intensidade do verde
-                blue = int(b * 0.5)  # Reduzir a intensidade do azul
-                pixels[x, y] = (red, green, blue, a)
+                if len(pixels[x, y]) == 4:
+                    r, g, b, a = pixels[x, y]
+                    # Aumentar a componente vermelha e diminuir verde e azul
+                    red = min(255, int(r * 1.5))  # Ajustar a intensidade do vermelho
+                    green = int(g * 0.5)  # Reduzir a intensidade do verde
+                    blue = int(b * 0.5)  # Reduzir a intensidade do azul
+                    pixels[x, y] = (red, green, blue, a)
+                else:
+                    r, g, b = pixels[x, y]
+                    # Aumentar a componente vermelha e diminuir verde e azul
+                    red = min(255, int(r * 1.5))  # Ajustar a intensidade do vermelho
+                    green = int(g * 0.5)  # Reduzir a intensidade do verde
+                    blue = int(b * 0.5)  # Reduzir a intensidade do azul
+                    pixels[x, y] = (red, green, blue)
 
         # Salvar a imagem resultante
         # Mostrar a imagem resultante
