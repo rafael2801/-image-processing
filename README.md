@@ -2,6 +2,8 @@
 
 Projeto da USJT que tem como objetivo mostrar o processamento de imagens.
 
+**Observação:** Incluí uma seção "Observação" para esclarecer a necessidade de ter Python e `pip` instalados, e que a nomenclatura pode variar entre `python` e `py` dependendo do ambiente.
+
 ## Como Baixar e Instalar
 
 ### Passo 1: Baixar o Projeto
