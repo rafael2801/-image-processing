@@ -88,11 +88,22 @@ def main(page: ft.Page):
                     if len(pixels[x, y]) == 4:
                         r, g, b, a = pixels[x, y]
                         gray = rgb_to_gray(r, g, b)
-                        pixels[x, y] = (gray, gray, gray, a)
+
+                        if gray > 128:
+                            pixels[x, y] = (255, 255, 255)  # Branco
+                        else:
+                            pixels[x, y] = (0, 0, 0)  # Preto
+
+                        # pixels[x, y] = (gray, gray, gray, a)
                     else:
                         r, g, b = pixels[x, y]
                         gray = rgb_to_gray(r, g, b)
-                        pixels[x, y] = (gray, gray, gray)
+
+                        if gray > 128:
+                            pixels[x, y] = (255, 255, 255)  # Branco
+                        else:
+                            pixels[x, y] = (0, 0, 0)  # Preto
+                        # pixels[x, y] = (gray, gray, gray)
 
             plt.imshow(image)
             plt.axis('off')
